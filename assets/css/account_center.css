@@ -1,0 +1,302 @@
+/* 重置瀏覽器預設樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 漸變背景 */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色漸變背景 */
+    color: #ffffff;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 幾何形狀裝飾 */
+body::before,
+body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+body::before {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+}
+
+body::after {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+}
+
+/* Header 樣式 */
+header {
+    width: 100%;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+header h1 {
+    font-size: 2em;
+    color: #ffffff;
+}
+
+header .link a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+header .link a:hover {
+    color: #00f2fe;
+}
+
+/* Flex 容器樣式 */
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    z-index: 2;
+}
+
+/* Info Block 樣式 */
+.info-block {
+    background: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    min-width: 250px;
+}
+
+.info-block h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #ffffff;
+}
+
+.info-block p,
+.info-block span {
+    font-size: 1.2em;
+    color: #dddddd;
+}
+
+/* Button Container 樣式 */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.button-container button {
+    background: #4facfe;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.button-container button:hover {
+    background: #00f2fe;
+    transform: translateY(-2px);
+}
+
+.button-container button:active {
+    transform: translateY(0);
+}
+
+/* Result Div 樣式 */
+#result1,
+#result2,
+#result3,
+#result4,
+#result5,
+#m_result1,
+#m_result2,
+#m_result3,
+#m_result4,
+#m_result5 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+/* Edit Block 樣式 */
+.edit-block {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.edit-block a {
+    background: #4facfe;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.edit-block a:hover {
+    background: #00f2fe;
+    transform: translateY(-2px);
+}
+
+.edit-block a:active {
+    transform: translateY(0);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    header {
+        padding: 15px 30px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    header .link a {
+        font-size: 0.9em;
+    }
+
+    .flex {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .info-block {
+        min-width: 200px;
+        padding: 15px;
+    }
+
+    .info-block h2 {
+        font-size: 1.3em;
+    }
+
+    .button-container button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+    }
+
+    .edit-block a {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+    }
+
+    header h1 {
+        margin-bottom: 10px;
+        font-size: 1.5em;
+    }
+
+    header .link {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header .link a {
+        margin-left: 0;
+        margin-bottom: 10px;
+        font-size: 0.9em;
+    }
+
+    .flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .info-block {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .button-container {
+        justify-content: center;
+    }
+
+    .edit-block {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 10px 15px;
+    }
+
+    header h1 {
+        font-size: 1.2em;
+    }
+
+    header .link a {
+        font-size: 0.8em;
+    }
+
+    .info-block h2 {
+        font-size: 1.1em;
+    }
+
+    .button-container button {
+        font-size: 0.8em;
+        padding: 6px 12px;
+    }
+
+    .edit-block a {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+
+    #result1,
+    #result2,
+    #result3,
+    #result4,
+    #result5,
+    #m_result1,
+    #m_result2,
+    #m_result3,
+    #m_result4,
+    #m_result5 {
+        font-size: 1em;
+    }
+}

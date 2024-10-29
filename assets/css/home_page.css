@@ -1,0 +1,273 @@
+/* 重置瀏覽器預設樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 漸變背景 */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色漸變背景 */
+    color: #ffffff;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 幾何形狀裝飾 */
+body::before,
+body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+body::before {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+}
+
+body::after {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+}
+
+/* Header 樣式 */
+header {
+    width: 100%;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+header h1 {
+    font-size: 1.5em;
+    color: #ffffff;
+}
+
+header .link a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+header .link a:hover {
+    color: #00f2fe;
+}
+
+/* 下拉式選單 */
+.list {
+    width: 100%;
+    padding: 20px 40px;
+    background: rgba(0, 0, 0, 0.3); /* 半透明黑色背景 */
+    position: relative;
+    z-index: 2;
+}
+
+.drop-down-menu {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.drop-down-menu > li {
+    position: relative;
+}
+
+.drop-down-menu > li > a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.drop-down-menu > li > a:hover {
+    color: #00f2fe;
+}
+
+/* 子選單 */
+.drop-down-menu li ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    list-style: none;
+    padding: 10px 0;
+    border-radius: 8px;
+    min-width: 150px;
+}
+
+.drop-down-menu li:hover > ul {
+    display: block;
+}
+
+.drop-down-menu li ul li {
+    padding: 10px 20px;
+}
+
+.drop-down-menu li ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1em;
+    display: block;
+    transition: background 0.3s ease;
+}
+
+.drop-down-menu li ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* 中間內容區域 */
+.all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    z-index: 2;
+}
+
+/* 遊戲展示區 */
+.show_game {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+/* 卡片樣式 */
+.card {
+    background: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 250px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+}
+
+.card .pic {
+    width: 100%;
+    height: 0;
+    padding-bottom: 75%; /* 4:3 比例 */
+    position: relative;
+    overflow: hidden;
+}
+
+.card .pic img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 保持圖片比例，顯示整張圖片 */
+    transition: transform 0.3s ease;
+}
+
+.card:hover .pic img {
+    transform: scale(1.05); /* 溫和縮放 */
+}
+
+.card .text {
+    padding: 15px;
+    color: #000000;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card .text h3 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.card .text p {
+    font-size: 0.9em;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .drop-down-menu {
+        gap: 20px;
+    }
+
+    .card {
+        width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header h1 {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    header .link a {
+        margin-left: 10px;
+        font-size: 0.9em;
+    }
+
+    .drop-down-menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .drop-down-menu > li {
+        width: 100%;
+    }
+
+    .drop-down-menu li ul {
+        position: static;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .show_game {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .drop-down-menu > li > a {
+        font-size: 1em;
+    }
+
+    .card .text h3 {
+        font-size: 1em;
+    }
+
+    .card .text p {
+        font-size: 0.8em;
+    }
+}

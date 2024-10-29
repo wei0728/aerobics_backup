@@ -1,0 +1,185 @@
+/* 重置瀏覽器預設樣式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 漸變背景 */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色漸變背景 */
+  color: #ffffff;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 幾何形狀裝飾 */
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+body::before {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  left: -150px;
+}
+
+body::after {
+  width: 200px;
+  height: 200px;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* 主內容容器樣式 */
+.main-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 80%; /* 佔據頁面寬度的 80% */
+  max-width: 1200px; /* 最大寬度，避免在超大螢幕上過寬 */
+  z-index: 2;
+}
+
+/* Canvas 樣式 */
+#cam {
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 320px;
+  height: 240px;
+  object-fit: cover;
+}
+
+/* iframe-container 樣式 */
+.iframe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 30%; /* 讓 iframe-container 佔據剩餘空間 */
+  aspect-ratio: 1/1;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* 標籤樣式 */
+.label {  
+  font-size: 1.2em;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* 圖片樣式 */
+.iframe-container img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+  .main-container {
+      gap: 30px;
+  }
+
+  .iframe-container {
+      max-width: 700px;
+      gap: 15px;
+  }
+
+  .label {
+      font-size: 1.1em;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+      flex-direction: column; /* 在小螢幕上垂直排列 */
+      gap: 20px;
+  }
+
+  #cam {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+  }
+
+  .iframe-container {
+      width: 100%;
+      max-width: 500px;
+  }
+
+  .label {
+      font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+      gap: 15px;
+      width: 95%; /* 在極小螢幕上佔據更寬的比例 */
+  }
+
+  #cam {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+  }
+
+  .iframe-container {
+      width: 100%;
+      max-width: 400px;
+      gap: 10px;
+  }
+
+  .label {
+      font-size: 0.9em;
+  }
+
+  .iframe-container img {
+      max-width: 100%;
+  }
+}
+
+/* 新增按鈕樣式 */
+.button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #ffffff;
+  background-color: #4facfe;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #00f2fe;
+  transform: scale(1.05);
+}
+
+.button:active {
+  background-color: #00f2fe;
+  transform: scale(1);
+}
+
+.button:focus {
+  outline: 2px solid #00f2fe;
+}

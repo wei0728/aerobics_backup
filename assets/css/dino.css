@@ -1,0 +1,24 @@
+@font-face{
+    font-family: 'Pixel'; /* Define the font family name */
+    src: url('/static/font/Pixeltype.ttf') format('truetype'); /* Specify the path to your font file */
+    font-weight: normal;
+    font-size: normal;
+}
+body {
+    font-family: 'Pixel', sans-serif;
+    text-align : center;
+}
+#board{
+    background-color: lightgray;
+}
+.canvas_container{
+    display : flex;
+    flex-direction: row;
+}
+canvas{ 
+    border:1px solid #000;
+}
+.canvas2{
+    position : absolute;
+    right:0;
+}

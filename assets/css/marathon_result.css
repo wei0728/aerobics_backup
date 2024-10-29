@@ -1,0 +1,211 @@
+/* 重置瀏覽器預設樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 漸變背景 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色漸變背景 */
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 幾何形狀裝飾 */
+body::before,
+body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+body::before {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+}
+
+body::after {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+}
+
+/* 容器設置 */
+#container {
+    display: flex;
+    flex-direction: row; /* 左右佈局 */
+    background: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    width: 90%;
+    height : 80%;
+    gap: 20px; /* 內部元素間距 */
+    align-items: center; /* 垂直居中對齊 */
+}
+
+/* 按鈕共用樣式 */
+#container button {
+    width: 200px; /* 按鈕寬度 */
+    background-color: #4facfe;
+    color: white;
+    padding: 14px 20px;
+    margin: 10px 10px 0 10px; /* 上方留空間 */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#container button:hover {
+    background-color: #00f2fe;
+    transform: scale(1.05);
+}
+
+#container button:active {
+    transform: scale(1);
+    background-color: #00f2fe;
+}
+
+#container button:focus {
+    outline: 2px solid #00f2fe;
+}
+
+/* 調整新按鈕的位置 */
+/* 圖片容器 */
+#img-container {
+    flex: 1;
+    background: #e8f6ff; /* 淺藍色背景 */
+    display: flex;
+    flex-direction: column; /* 內部元素垂直排列 */
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: 90%;
+}
+
+#pose-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+}
+
+#pose-name h1 {
+    margin: 0 5px;
+    font-size: 1.5em;
+    color: #333333;
+}
+
+#img-container img {
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    max-width: 100%; /* 限制圖片最大高度 */
+    max-height: 90%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 評分部分 */
+#comments {
+    flex: 1;
+    background: #e8f6ff; /* 淺灰色背景 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 50%;
+    height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#score-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#score-container h1 {
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #333333;
+}
+
+#score {
+    font-size: 6em;
+    color: #000000; /* 高亮顏色 */
+}
+
+/* 評語框 */
+.comment {
+    background: #ffffff; /* 白色背景 */
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    height: 50%;
+    font-size: 2em;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    text-align: center; /* 評語文字右對齊 */
+    color: #333333;
+}
+
+/* Confetti Canvas */
+canvas#confettiCanvas {
+    display: none; /* 初始隱藏畫布，動畫觸發時顯示 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 讓畫布不阻擋頁面上的其他元素 */
+    z-index: 3;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    #container {
+        flex-direction: column; /* 垂直佈局 */
+        max-width: 600px;
+    }
+
+    #img-container, #comments {
+        width: 100%;
+    }
+
+    #pose-name h1 {
+        font-size: 1.2em;
+    }
+
+    #score-container h1 {
+        font-size: 1.2em;
+    }
+
+    #score {
+        font-size: 1.8em;
+    }
+
+    .comment {
+        font-size: 1em;
+        text-align: left; /* 小螢幕上改為左對齊 */
+    }
+}
