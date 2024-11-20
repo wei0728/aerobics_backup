@@ -48,17 +48,17 @@ function draw() {
           
           // 將經過的時間轉換為秒數
           label_time.innerText = '時間 : ' + Math.floor((60000 - elapsedTime) / 1000);
-
-          // 檢查冷卻時間是否已經過
-          if (millis() - lastPoseTime > cooldownDuration) {
-            lock = false;
-          }
-
           if (lock) {
+            img.src="../assets/img/check.png";
+            label_pose.innerText="回到原位";
+            if(isrollback(pose)){
+              lock = false; 
+              is_label();
+            }
             // 如果上鎖，可以在這裡添加顯示鎖定狀態的邏輯
           } else { // 若沒上鎖則進入
             if (is_pose(pose)) {
-              key = true;
+              //key = true;
               score++;
               label_score.innerText = '分數 : ' + score;
               lastPoseTime = millis(); // 更新上一次偵測到姿勢的時間
@@ -154,6 +154,47 @@ function isleftknee(pose){
       ){
       return true;
     } else return false;
+}
+
+function isrollback(pose){
+  let boo=false;
+    switch(cur_pose){
+      case 'deep_squat':
+      if(
+        pose.nose.y<250&&
+        pose.leftShoulder.y<300&&
+        pose.keypoints[0].score>0.60&&
+        pose.keypoints[5].score>0.60
+      ) return true;
+      break;
+      case 'frontbend':
+      if(
+        pose.nose.y<250&&
+        pose.leftShoulder.y<300&&
+        pose.keypoints[0].score>0.60&&
+        pose.keypoints[5].score>0.60
+      )
+      break;
+      case 'jump_pack':
+      if(
+        pose.leftShoulder.y<250&&
+        pose.rightShoulder.y<250
+      )
+      break;
+      case 'left_ankle_left_knee':
+      if(
+        pose.leftShoulder.y<250&&
+        pose.rightShoulder.y<250
+      )
+      break;
+      case 'sidebend':
+      if(true){
+        Math.sqrt(Math.abs(pose.leftElbow.x-pose.leftEar.x) **2+
+        Math.abs(pose.leftElbow.y-pose.leftEar.y) **2)>80&&
+        pose.leftWrist.y>250
+      }
+      break;
+    }
 }
 
 function goClassify(){
