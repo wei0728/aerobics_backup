@@ -17,4 +17,29 @@
         </div>
         <script src="../assets/js/noob_training.js"></script>
     </body>
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            include "Connect.php";
+            $json_data = file_get_contents("php://input");
+            session_start();
+            $id = $_SESSION['id'];
+            $Connect = new Connect();
+            $Connect->sql_setup();               
+            if (!$Connect->connect_success()){
+                die("Connection failed: " . mysqli_connect_error());
+            }                
+            $sql = "select * from game where player_id = $id";                    
+            $result = $Connect->sql_command($sql);
+            if (mysqli_num_rows($result) > 0) {     
+                // output data of each row
+                //if 現有資料大於等於傳送來的資料
+                $sql = "update game set json = '$json_data' where player_id = $id";
+                $Connect->sql_command($sql);
+            }
+            else {
+                $sql = "insert into game(player_id, json) Values ('$id', '$json_data')";
+                $Connect->sql_command($sql);
+            }
+        }
+        ?>
 </html>

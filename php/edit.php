@@ -2,7 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="../assets/css/edit.css">
-        <title>acount center</title>
+        <title>edit</title>
     </head>
     <body>
         <form action="#" method="post">
@@ -11,10 +11,10 @@
                 <input type="text" placeholder="Enter Password" name="new_password" required><br>  
                 <label for="confirm_password"><b>confirm password :</b></label>
                 <input type="password" placeholder="confirm Password" name="confirm_password" required><br>  
-                <center>
-                    <button type="submit"><b>confirm</b></button>
-                    <button type="reset" onclick="location.href='home_page.php'">cancel</button>
-                </center>
+                <div class="button-group">
+                    <button type="submit" class="btn confirm-btn"><b>確認</b></button>
+                    <button type="reset" class="btn cancel-btn" onclick="location.href='home_page.php'">取消</button>
+                </div>
             </div>
         </form>
         <?php

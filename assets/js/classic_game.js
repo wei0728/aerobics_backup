@@ -1,11 +1,15 @@
 var platforms;
 var score = 0;
-var scoreText;
+var scoreText = document.getElementById('labeltime');
+var main_screen = document.getElementById('main-game');
+var end_screen = document.getElementById("game_over_list");
+end_screen.style.display = 'none';
 
 var config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
+  parent: 'game-container',
   physics: {
       default: 'arcade',
       arcade: {
@@ -20,7 +24,6 @@ var config = {
   }
 };
 var game = new Phaser.Game(config);
-
 function preload (){
   try{
     this.load.image('sky', '../assets/img/sky.png');
@@ -31,7 +34,6 @@ function preload (){
       'dude','../assets/img/dude.png',{ frameWidth: 32, frameHeight: 48 } );
   }catch(e){console.log(e);}
 }
-    
 function create (){
   try{
     this.add.image(400, 300, 'sky');
@@ -43,7 +45,7 @@ function create (){
     player = this.physics.add.sprite(100, 450, 'dude');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
-    
+
     this.anims.create({
       key: 'left',
       frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -80,8 +82,9 @@ function create (){
     this.physics.add.collider(player, bombs, hitBomb, null, this);
   }catch(e){console.log(e);}
 }
-
 function update (){
+    document.getElementById('sum').removeAttribute("hidden");
+    console.log(score);
   //console.log(controller);
   try{
     if (controller=="l"){
@@ -97,7 +100,7 @@ function update (){
         player.anims.play('turn');
     }
     if (controller=="u" && player.body.touching.down){
-        player.setVelocityY(-330);
+        player.setVelocityY(-400);
     }
   }catch(e){}
 }
@@ -123,5 +126,48 @@ function hitBomb (player, bomb){
   player.setTint(0xff0000);
   player.anims.play('turn');
   gameOver = true;
-  score = 200;
+  document.getElementById('sum').removeAttribute("hidden");
+  main_screen.style.display = 'none';
+  end_screen.style.display = 'block';
+  send_score(score);
+}
+
+function reload(){
+  location.reload();
+}
+
+function home(){
+  window.location.href = 'home_page.php';
+}
+
+
+function setValue() {
+  document.getElementById('hiddenField').value = score;
+
+}
+
+function send_score(score){
+  var xhr = new XMLHttpRequest();
+      // Prepare the data to send
+      var data = {
+        score: score // 分數
+      };
+      
+      // Convert the data to a JSON string
+      var jsonData = JSON.stringify(data);
+      
+      // Set up the AJAX request
+      xhr.open("POST", "classic_game.php", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      
+      // Define what happens on successful data submission
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {  
+            // Request was successful
+              //console.log(xhr.responseText); // Log the response from the server
+          }
+      };
+      
+      // Send the request
+      xhr.send(jsonData);
 }

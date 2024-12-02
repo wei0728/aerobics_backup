@@ -3,179 +3,219 @@ let features;
 let KNN;
 let poseNet;
 let pose;
-let score = 0;                                            //分數
-let mode;                                                 //題號
-let cdtimer = 0;                                          //計數器(冷卻
-let lock=new Boolean(false);                              //作答鎖
-let label_pose = document.getElementById("labelpose");
-let label_score = document.getElementById("labelscore");
+let score=0;
+let mode;
+let begin_time;
+let cd_timer;
+let past;
+let label_pose=document.getElementById("labelpose");
+let label_score=document.getElementById("labelscore");
 let label_time=document.getElementById("labeltime");
 let img=document.getElementById("img1");
 let ready=false;
 let working=false;
 let loadnum=0;
-let labelp;
 let models=0;
 let key=false;
+let lock;
 
-function setup() {
-  createCanvas(640, 480, cam);                            //建立視訊鏡頭的畫布
-  video = createCapture(VIDEO);                           //擷取視訊畫面
-  video.size(640, 480);
+function setup(){
+  createCanvas(640,480,cam);
+  video=createCapture(VIDEO);
+  video.size(640,480);
   video.hide();
-  poseNet = ml5.poseNet(video, modelLoaded);              //引用並實體化套件
+  poseNet=ml5.poseNet(video,modelLoaded);
   knn=ml5.KNNClassifier();
-  poseNet.on('pose', gotPoses);
+  poseNet.on('pose',gotPoses);
   features=ml5.featureExtractor("MobileNet",modelLoaded);
-  mode = 0;
+  mode=0;
+  label_score.innerText="0";
+  label_time.innerText="0秒";
+  label_pose.innerText="動作是...";
+  cd_timer=Date.now();
 }
 
-function draw() {
+function draw(){
   try{
-    if(ready){                                             //若模型皆引入完成則進入
-      cdtimer++;                                           //每次進入則計數器+1 
-      if(cdtimer>120){                                     //若冷卻達到100則解鎖
-        lock=false; 
-      }
-      const logits=features.infer(video);
-      if (pose) {
-        translate(video.width, 0);                         //水平翻轉鏡頭畫面
-        scale(-1, 1);
-        image(video, 0, 0);
-        if (lock==true) {                //若上鎖則顯示答對
-          label_time.innerText="答對";
-        }
-        else{                            //若沒上鎖則進入
-          label_time.innerText="...";
-          switch(mode){                                    //根據題號進行判斷
-            case 0:
-              if (isJumpingJack(pose)) {           //若正確則給鑰匙並下一題
-                key=true;
-                img.src="../assets/img/squat.webp";
-                label_pose.innerText = "深蹲";
+    if(ready){
+      show();
+      if(!working){
+        already();
+      }else if(Date.now()-cd_timer>200){
+        const logits=features.infer(video);
+        if(past<5000000){
+          if(!lock){
+            if (pose){
+              switch(mode){
+                case 0:
+                  if (isJumpingJack(pose)){
+                    key=true;
+                  }
+                  break;
+                case 1:
+                  if (isSquat(pose)){
+                    key=true;
+                  }
+                  break;
+                case 2:
+                  if (isHighKnee(pose)){
+                    key=true;
+                  }
+                  break;
+                case 3:
+                  if (isFrontBend(pose)){
+                    key=true;
+                  }
+                  break;
+                case 4:
+                  if (true){
+                    key=true;
+                  }
+                  break;
+                default:
+                  console.log("error mode");
               }
-              break;
-            case 1:
-              if (isSquat(pose)) {
-                key=true;
-                img.src="../assets/img/left_ankle_left_knee.jpeg"
-                label_pose.innerText = "左肘碰左膝";
+              if(key){
+                posematch(mode);
               }
-              break;
-            case 2:
-              if (isleftelknee(pose)) {
-                key=true;
-                img.src="../assets/img/sidebend.jpeg"
-                label_pose.innerText = "站姿側曲";
-              }
-              break;
-            case 3:
-              if (isSideBend(pose)) {
-                key=true;
-                img.src="../assets/img/pose.jpg"
-                label_pose.innerText = "回到原位";
-              }
-              break;
-            case 4:
-              if (isdd(pose)) {
-                key=true;
-                 img.src="../assets/img/jump_pack.jpeg"
-                label_pose.innerText = "開合跳";
-              }
-              break;
-            default:
-              console.log("error mode");
-          }
-          if(key){                                       //有鑰匙則加分、分數更新、加入模型、上鎖、收回鑰匙
-            score++;
-            label_score.innerText=score;
-            posematch(mode);
-            cdtimer = 0;
-            lock=true;
-            mode++;
-            if(mode==5){
-              mode=0;
             }
-            key=false;
+          }else{
+            if(isrollback(pose,mode)){
+              lock=false;
+            } 
           }
-        }
-        if(ready&& !working){            //已就緒且未執行，則呼叫一次goClassify()，並由其遞迴自己呼叫
-          goClassify();
-          working=true;
-          img.src="https://p0.itc.cn/q_70/images03/20220710/5a95c6e2c4f04d9e923ea7617ef00513.jpeg"
-          label_pose.innerText = "開合跳";
-        }
+        }else{alert(score);}
       }
-    }else{
-      label_pose.innerText ="Loading...";
-    }
+    }else{label_pose.innerText="Loading...";}
   }catch(e){
     console.log(e);
   }
 }
 
-function gotPoses(poses) {
-  if (poses.length > 0) {
-    pose = poses[0].pose;
+function gotPoses(poses){
+  if (poses.length>0){
+    pose=poses[0].pose;
   }
 }
-function modelLoaded() {
+function modelLoaded(){
   loadnum+=1;
   if(loadnum==2){
     ready=true;
     console.log("modelLoaded!");
   }
 }
-function isJumpingJack(pose) {
-  if(
-    Math.sqrt(Math.abs(pose.leftElbow.x-pose.leftEar.x) **2+
-    Math.abs(pose.leftElbow.y-pose.leftEar.y) **2)<60/*&&
+function isJumpingJack(pose){
+  if(Math.sqrt(Math.abs(pose.leftElbow.x-pose.leftEar.x)**2+
+    Math.abs(pose.leftElbow.y-pose.leftEar.y)**2)<60/*&&
     pose.keypoints[7].score>0.60&&
     pose.keypoints[3].score>0.60*/
     ){
     return true;
   } else return false;
 }
-
-function isSquat(pose) {
-  if(                                                       //若鼻子低於250，肩膀低於210，且..
-    pose.nose.y>250&&
-    pose.leftShoulder.y>210&&
+function isSquat(pose){
+  if(pose.nose.y>250&&
+    pose.leftShoulder.y>300&&
     pose.keypoints[0].score>0.60&&
     pose.keypoints[5].score>0.60
     ){
     return true;
   } else return false;
 }
-
-function isleftelknee(pose){
-  if(                                                       //若左肘與左膝距離<50，且..
-    Math.sqrt(Math.abs(pose.leftKnee.x-pose.leftElbow.x) **2 +       
-    Math.abs(pose.leftKnee.y-pose.leftElbow.y) **2)<50 &&
-    pose.keypoints[13].score>0.60&&
-    pose.keypoints[7].score>0.60
+function isHighKnee(pose){
+  if(
+    (pose.leftKnee.y<390&&pose.keypoints[13].score>0.40)||
+    (pose.rightKnee.y<390&&pose.keypoints[14].score>0.40)
+    //pose.leftKnee.y<
+    /*(pose.keypoints[13].score>0.70&&pose.keypoints[16].score>0.70&&pose.leftKnee.y>pose.rightAnkle.y)||
+    (pose.keypoints[14].score>0.70&&pose.keypoints[15].score>0.70&&pose.rightKnee.y>pose.leftAnkle.y)*/
     ){
     return true;
   }else return false;
 }
-
 function isSideBend(pose){
-  if(                                                       //左肘高於鼻、左肩高於右肩，且..
-    pose.leftElbow.y<pose.nose.y&&
+  if(pose.leftElbow.y<pose.nose.y&&
     pose.leftShoulder.y<pose.rightShoulder.y&&
     pose.keypoints[7].score>0.40&&
-    pose.keypoints[0].score>0.40&&    
+    pose.keypoints[0].score>0.40&&
     pose.keypoints[5].score>0.40&&
     pose.keypoints[6].score>0.40
     ){
     return true;
   }else return false;
 }
-
-function isdd(pose) {
-  return true;
+function isFrontBend(pose){
+  if(pose.rightShoulder.y>280&&
+    pose.leftShoulder.y>280&&
+    pose.keypoints[6].score>0.35&&
+    pose.keypoints[5].score>0.35
+    ){
+    return true;
+  }else return false;
 }
-
+function isrollback(pose,posemode){
+  let boo=false;
+    switch(mode){
+      case 0:
+      if(
+        Math.sqrt(Math.abs(pose.leftElbow.x-pose.leftEar.x) **2+
+        Math.abs(pose.leftElbow.y-pose.leftEar.y) **2)>80&&
+        pose.leftWrist.y>250
+      ){
+        img.src="https://media.gq.com.tw/photos/5dbc4dcb801fc800083f31f3/master/w_1600%2Cc_limit/2018053058351453.jpg";
+        label_pose.innerText="深蹲";
+        boo=true;
+      }
+      break;
+    case 1:
+      if(
+        pose.nose.y<250&&
+        pose.leftShoulder.y<300&&
+        pose.keypoints[0].score>0.60&&
+        pose.keypoints[5].score>0.60
+      ){
+        img.src="https://media.istockphoto.com/id/1148862848/photo/fit-athletic-male-model-in-sportswear-doing-strength-exercise-with-knee-up-in-gym-isolated-on.jpg?s=1024x1024&w=is&k=20&c=4_E5cLb6yQM5Lx6IJhHLH0_JgkBINfdaOHmt4SjwGic="
+        label_pose.innerText="高抬腿";
+        boo=true;
+      }
+      break;
+    case 2:
+      if(
+        pose.leftKnee.y>pose.rightHip.y&&
+        pose.rightKnee.y>pose.leftHip.y
+      ){
+        img.src="https://www.yogaclassplan.com/wp-content/uploads/2021/06/standing-half-forward-bend.jpg"
+        label_pose.innerText="站姿前曲";
+        boo=true;
+      }
+      break;
+    case 3:
+      if(
+        pose.leftShoulder.y<250&&
+        pose.rightShoulder.y<250
+      ){
+        img.src="https://media.istockphoto.com/id/625389694/photo/man-smiling-happiness-carefree-emotional-expression-concept.jpg?s=612x612&w=0&k=20&c=pzs1i8TTfk58kgRtoXo9-6Hx2xrTQIl8ylg2WVCRRWg="
+        label_pose.innerText="回到原位";
+        boo=true;
+      }
+      break;
+    case 4:
+      if(true){
+        img.src="https://p0.itc.cn/q_70/images03/20220710/5a95c6e2c4f04d9e923ea7617ef00513.jpeg"
+        label_pose.innerText="開合跳";
+        boo=true;
+      }
+      break;
+    default:
+      console.log("error mode");
+    }if(boo){
+      mode++;
+      if(mode==5){mode=0;}
+      lock=false;
+      return true;
+    }
+    return false;
+}
 
 function goClassify(){
   try{
@@ -190,24 +230,89 @@ function goClassify(){
     console.log(e);
   }
 }
-
-function posematch(mode){                         //根據題號與畫面，訓練出相應的模型
+function posematch(posemode){
+  img.src="https://media.istockphoto.com/id/625389694/photo/man-smiling-happiness-carefree-emotional-expression-concept.jpg?s=612x612&w=0&k=20&c=pzs1i8TTfk58kgRtoXo9-6Hx2xrTQIl8ylg2WVCRRWg="
+  label_pose.innerText="回到原位";
   const logits=features.infer(video);
-  if(mode==0){
-    knn.addExample(logits,"mode0");
-    console.log()
-  }else if(mode==1){
-    knn.addExample(logits,"mode1");
-  }else if(mode==2){
-    knn.addExample(logits,"mode2");
-  }else if(mode==3){
-    knn.addExample(logits,"mode3");
-  }else if(mode==4){
-    knn.addExample(logits,"mode4");
-  }else{console.log("error");}
+  cd_timer=Date.now();
+  score++;
+  lock=true;
+  key=false;
+  switch(posemode){
+    case 0:
+      knn.addExample(logits,"mode0");
+      break;
+    case 1:
+      knn.addExample(logits,"mode1");
+      break;
+    case 2:
+      knn.addExample(logits,"mode2");
+      break;
+    case 3:
+      knn.addExample(logits,"mode3");
+      break;
+    case 4:
+      knn.addExample(logits,"mode4");
+      break;
+    default:
+      console.log("error mode");
+  }
   models+=1;
   if(models==20){
-    knn.save("model.json");
-    location.href="home_page.php";
+    //let json = knn.knnClassifier.classDatasetMatrices[0]+','+knn.knnClassifier.classDatasetMatrices[1]+','+knn.knnClassifier.classDatasetMatrices[2]+','+knn.knnClassifier.classDatasetMatrices[3]+','+knn.knnClassifier.classDatasetMatrices[4];
+    save_to_sql(knn);
+    //send_json();
+    alert("恭喜你完成新手訓練");
+    location.href = "home_page.php";
   }
+}
+
+function already(){
+  begin_time=Date.now();
+  goClassify();
+  working=true;
+  img.src="https://p0.itc.cn/q_70/images03/20220710/5a95c6e2c4f04d9e923ea7617ef00513.jpeg"
+  label_pose.innerText="開合跳";
+}
+
+function show(){
+  past=Date.now()-begin_time;
+  label_time.innerText=(Math.floor(past/1000))+"秒";
+  label_score.innerText=score;
+  translate(video.width,0);
+  scale(-1,1);
+  image(video,0,0);
+}
+
+function save_to_sql(knn) {
+  const dataset = knn.knnClassifier.getClassifierDataset();
+  if (knn.mapStringToIndex.length > 0) {
+    Object.keys(dataset).forEach((key) => {
+      if (knn.mapStringToIndex[key]) {
+        dataset[key].label = knn.mapStringToIndex[key];
+      }
+    });
+  }
+  const tensors = Object.keys(dataset).map((key) => {
+    const t = dataset[key];
+    if (t) {
+      return t.dataSync();
+    }
+    return null;
+  });
+  let model = JSON.stringify({ dataset, tensors });
+  send_model(model);
+}
+
+function send_model(model){
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "noob_training.php", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {  
+            // Request was successful
+        //console.log(xhr.responseText); // Log the response from the server
+    }
+};
+  xhr.send(model);
 }

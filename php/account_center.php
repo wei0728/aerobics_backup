@@ -16,7 +16,7 @@
             <h1>帳號中心</h1>
             <div class="link">
                 <a href="account_center.php"><?php echo $_SESSION['last_name'].' '.$_SESSION['first_name'];?></a>
-                <a href="login_page.php">登出</a>
+                <a href="front_page.php">登出</a>
             </div>
         </header> 
         <div class="flex">

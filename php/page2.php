@@ -10,10 +10,10 @@
 <body>
     <?php session_start() ?>
     <header>
-        <h1><?php echo "welcome " . $_SESSION['last_name'] . " " . $_SESSION['first_name'] . " to our game world"; ?></h1>
+        <h1><?php echo "歡迎 " . $_SESSION['last_name'] . " " . $_SESSION['first_name'] . " 來到整合肢體辨識技術的創新輔助運動系統"; ?></h1>
         <div class="link">
             <a href="account_center.php"><?php echo $_SESSION['last_name'] . " " . $_SESSION['first_name'] ?></a>
-            <a href="login_page.php">logout</a>
+            <a href="front_page.php">登出</a>
         </div>
     </header>
 

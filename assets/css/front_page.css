@@ -1,53 +1,52 @@
+@font-face {
+    font-family: 'CHenYuluoyan';
+    src: url('../font/ChenYuluoyan-Thin-Monospaced.ttf') format("truetype");
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 漸變背景 */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色漸變背景 */
+    font-family: 'Noto Sans TC', Arial, sans-serif;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: #ffffff;
     min-height: 100vh;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    padding-bottom: 60px; /* 為footer留出空間 */
 }
 
-/* 幾何形狀裝飾 */
-body::before,
-body::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: 1;
-}
-
-body::before {
-    width: 300px;
-    height: 300px;
-    top: -150px;
-    left: -150px;
-}
-
-body::after {
-    width: 200px;
-    height: 200px;
-    bottom: -100px;
-    right: -100px;
-}
 
 /* Header 樣式 */
-header {
+ 
+.navbar {
+    padding: 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 20px 40px;
-    background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    height: 60px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    position: relative;
-    z-index: 2;
+    justify-content: space-between;
+    transition: top 0.3s;
+    z-index: 1000;
+}
+
+header.scrolled {
+    background: rgba(0, 0, 0, 0.9);
+}
+.navbar.hidden {
+    top: -60px; /* 將導航欄移出視窗 */
 }
 
 header h1 {
@@ -67,22 +66,28 @@ header .link a:hover {
     color: #00f2fe;
 }
 
+/* 主內容區域 */
+main {
+    margin-top: 80px; /* 為固定header留出空間 */
+    padding: 20px;
+}
+
 /* 圖庫容器樣式 */
 .gallery-container {
     position: relative;
-    width: 600px; /* 根據需要調整寬度 */
-    height: 400px; /* 根據需要調整高度 */
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
     margin: 50px auto;
     overflow: hidden;
-    border: 2px solid #ccc;
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
 }
 
-/* 滑動的圖片列表 */
 .gallery-slider {
     display: flex;
-    width: 100%;
     height: 100%;
     transition: transform 0.5s ease-in-out;
 }
@@ -92,6 +97,7 @@ header .link a:hover {
     height: 100%;
     object-fit: cover;
     flex-shrink: 0;
+    border-radius: 10px;
 }
 
 /* 圓形按鈕樣式 */
@@ -104,18 +110,19 @@ header .link a:hover {
     color: #ffffff;
     width: 50px;
     height: 50px;
-    font-size: 20px; /* 調整圖示大小 */
+    font-size: 24px;
     cursor: pointer;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     z-index: 3;
 }
 
 .gallery-button:hover {
     background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
 }
 
 #prevBtn {
@@ -125,3 +132,51 @@ header .link a:hover {
 #nextBtn {
     right: 10px;
 }
+
+.mode_img-container {
+    width: 100%;
+    max-width: 150px;
+    margin: 0 20px;
+}
+
+/* 介紹區域樣式 */
+.introduction-container {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 50px auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.introduction-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ffeb3b;
+    text-align: center;
+}
+
+.content {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333333;
+    font-family: 'CHenYuluoyan', 'Noto Sans TC', Arial, sans-serif;
+    font-size: 180%;
+    line-height: 1.6;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Footer 樣式 */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 0.9em;
+}
+

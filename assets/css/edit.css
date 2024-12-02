@@ -1,0 +1,162 @@
+/* ========================= */
+/* ====== 基礎樣式 ======= */
+/* ========================= */
+
+/* 全局重置 */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Noto Sans TC', Arial, sans-serif;
+    font-size: 18px; /* 基本字體大小 */
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 60px; /* 為footer留出空間 */
+    padding-top: 80px; /* 為固定導航欄留出空間 */
+}
+
+/* ========================= */
+/* ====== 導航欄樣式 ======= */
+/* ========================= */
+
+.navbar {
+    padding: 20px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s, top 0.3s;
+    z-index: 1000;
+}
+
+header.scrolled {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.navbar.hidden {
+    top: -60px; /* 將導航欄移出視窗 */
+}
+
+.navbar h1 {
+    font-size: 2em; /* 增大導航欄標題字體 */
+    color: #ffffff;
+    font-family: 'CHenYuluoyan', 'Noto Sans TC', Arial, sans-serif;
+}
+
+.navbar .link a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1em; /* 保持導航鏈接大小一致 */
+    transition: color 0.3s ease;
+}
+
+.navbar .link a:hover {
+    color: #00f2fe; /* 導航鏈接懸停顏色 */
+}
+
+/* ========================= */
+/* ====== 表單樣式 ======= */
+/* ========================= */
+
+/* 容器樣式 */
+.container {
+    background: rgba(0, 0, 0, 0.6); /* 表單背景 */
+    border-radius: 10px;
+    padding: 50px 40px; /* 增大內邊距以適應更大的字體 */
+    max-width: 500px; /* 擴大容器寬度以避免內容擁擠 */
+    margin: 140px auto; /* 調整頂部間距以配合固定導航欄 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* 陰影效果 */
+    color: #ffffff;
+    font-family: 'CHenYuluoyan', 'Noto Sans TC', Arial, sans-serif;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+
+/* 標題樣式 */
+.container h2 {
+    text-align: center;
+    margin-bottom: 40px; /* 增大下方間距 */
+    color: #ffeb3b; /* 標題顏色 */
+    font-size: 2.5em; /* 增大標題字體 */
+}
+
+/* 標籤樣式 */
+.container label {
+    display: block;
+    margin-bottom: 12px; /* 增大下方間距 */
+    font-size: 1.2em; /* 增大標籤字體 */
+    color: #ffffff;
+}
+
+/* 輸入框樣式 */
+.container input[type="password"],
+.container input[type="text"] {
+    width: 100%;
+    padding: 12px 20px; /* 增大內邊距以適應更大的字體 */
+    margin-bottom: 25px; /* 增大下方間距 */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em; /* 增大輸入框字體 */
+    font-family: 'Noto Sans TC', Arial, sans-serif;
+    background: rgba(255, 255, 255, 0.2); /* 輸入框背景 */
+    color: #ffffff;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* 按鈕群組樣式 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* 增大按鈕之間的間距 */
+    margin-top: 30px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px 20px; /* 增大按鈕高度 */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em; /* 增大按鈕字體 */
+    cursor: pointer;
+    font-family: 'Noto Sans TC', Arial, sans-serif;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.confirm-btn {
+    background-color: #4facfe; /* 確認按鈕顏色 */
+    color: #ffffff;
+}
+
+.confirm-btn:hover {
+    background-color: #00f2fe; /* 確認按鈕懸停顏色 */
+    transform: scale(1.05);
+}
+
+.cancel-btn {
+    background-color: #4facfe; /* 取消按鈕顏色 */
+    color: #ffffff;
+}
+
+.cancel-btn:hover {
+    background-color: #00f2fe; /* 取消按鈕懸停顏色 */
+    transform: scale(1.05);
+}
+

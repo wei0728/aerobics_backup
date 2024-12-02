@@ -15,8 +15,8 @@
         function sql_command($command){
             return mysqli_query($this->connect_success, $command);
         }
-        function sql_search($command, $pose){
-            return mysqli_fetch_assoc(mysqli_query($this->connect_success, $command))[$pose];
+        function sql_search($command, $columm){
+            return mysqli_fetch_assoc(mysqli_query($this->connect_success, $command))[$columm];
         }
     }
 ?>

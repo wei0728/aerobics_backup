@@ -4,7 +4,10 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+html {
+    overflow: auto;
+    scroll-behavior: smooth;
+}
 /* 漸變背景 */
 body {
     font-family: Arial, sans-serif;
@@ -12,7 +15,6 @@ body {
     color: #ffffff;
     min-height: 100vh;
     position: relative;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,12 +37,7 @@ body::before {
     left: -150px;
 }
 
-body::after {
-    width: 200px;
-    height: 200px;
-    bottom: -100px;
-    right: -100px;
-}
+
 
 /* Header 樣式 */
 header {
@@ -71,7 +68,7 @@ header .link a:hover {
     color: #00f2fe;
 }
 
-/* Flex 容器樣式 */
+/* Flex 容器樣式 */ 
 .flex {
     display: flex;
     justify-content: center;
