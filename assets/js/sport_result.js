@@ -267,3 +267,12 @@ function sleep(time){
 async function run(){
     await sleep(1000);
 }
+
+function reload(){
+    const urlParams = new URLSearchParams(window.location.search);
+    location.href="pose.php?"+urlParams;
+}
+
+function home(){
+    location.href="page2.php";
+}

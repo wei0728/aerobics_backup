@@ -3,6 +3,10 @@ function sendGet(param) {
     window.location.href = url;
 }
 
+function train(){
+    window.location.href = "noob";
+}
+
 function getter(mode){
     const urlParams = new URLSearchParams(window.location.search);
     const paramValue = urlParams.get('pose');

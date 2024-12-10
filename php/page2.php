@@ -33,7 +33,7 @@
                     <li><a onclick="sendGet('deep_squat')">深蹲</a></li>
                     <li><a onclick="sendGet('deep_squat')">側身伸展</a></li>  
                     <li><a onclick="sendGet('frontbend')">站姿前驅</a></li>
-
+                    <li><a onclick="train()">站姿前驅</a></li>
                 </ul>
             </li>
         </ul>
@@ -87,6 +87,7 @@
                     </p>
                 </div>
             </div>
+            
         </div>
     </div>
 </body>

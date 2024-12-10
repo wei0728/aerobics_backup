@@ -14,7 +14,7 @@
             <p id="labelscore" class="label" style="color:red"></p>
             <img id="img1">
             <p id="labelpose" class="label" >loading...</p>
-            <button onclick="showAlert()">結束</button>
+            <button class = "end-btn" onclick="showAlert()">結束</button>
         </div>
         <script src="../assets/js/get_marathon_pose.js"></script>
     </body>

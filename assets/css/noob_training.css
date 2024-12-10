@@ -91,6 +91,26 @@ body::after {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+
+.end-btn {
+  background: #4facfe;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.end-btn:hover {
+  background: #00f2fe;
+  transform: translateY(-2px);
+}
+
+.end-btn:active {
+  transform: translateY(0);
+}
 /* 響應式設計 */
 @media (max-width: 1024px) {
   .main-container {

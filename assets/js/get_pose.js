@@ -173,7 +173,6 @@ function isrollback(pose){
         pose.leftShoulder.y<300&&
         pose.keypoints[0].score>0.60&&
         pose.keypoints[5].score>0.60
-<<<<<<< HEAD
       )return true;
       break;
       case 'jump_pack':
@@ -197,28 +196,6 @@ function isrollback(pose){
         Math.abs(pose.leftElbow.y-pose.leftEar.y) **2)>80&&
         pose.leftWrist.y>250
       )return true;
-=======
-      )
-      break;
-      case 'jump_pack':
-      if(
-        pose.leftShoulder.y<250&&
-        pose.rightShoulder.y<250
-      )
-      break;
-      case 'left_ankle_left_knee':
-      if(
-        pose.leftShoulder.y<250&&
-        pose.rightShoulder.y<250
-      )
-      break;
-      case 'sidebend':
-      if(true){
-        Math.sqrt(Math.abs(pose.leftElbow.x-pose.leftEar.x) **2+
-        Math.abs(pose.leftElbow.y-pose.leftEar.y) **2)>80&&
-        pose.leftWrist.y>250
-      }
->>>>>>> 977bcbcc3e3371615f8d99f7fe942e35ab57ff67
       break;
     }
 }

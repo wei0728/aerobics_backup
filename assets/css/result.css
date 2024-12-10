@@ -166,3 +166,25 @@ canvas#confettiCanvas {
     pointer-events: none; /* 讓畫布不阻擋頁面上的其他元素 */
     z-index: 3;
 }
+
+
+.btn-container button {
+    background: #4facfe;
+    border: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-container button:hover {
+    background: #00f2fe;
+    transform: translateY(-2px);
+}
+
+.btn-container button:active {
+    transform: translateY(0);
+}
+  

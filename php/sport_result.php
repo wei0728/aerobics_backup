@@ -30,8 +30,12 @@
             <div class="comment2" id="grade2">word</div>
             <div class="comment3" id="grade3">word</div>
             <div class="comment4" id="grade4">word</div>
-            <div class="comment5" id="grade5">word</div>        
-        </div>    
+            <div class="comment5" id="grade5">word</div>   
+            <div class = "btn-container">
+                <button class = "button" id = "reload" onclick = reload()>再玩一次</button>
+                <button class = "button" id = "home" onclick = home()>回首頁</button>
+            </div>     
+        </div>   
     </div>        
     <script src="../assets/js/sport_result.js"></script>
 </body>

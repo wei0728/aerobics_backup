@@ -43,37 +43,6 @@ function marathon_front_bend_rank(){
     send_score('frontbend', 'marathon');
 }
 
-/*function fetchPlayerData() {
-    var xhr = new XMLHttpRequest();
-    
-    // 設定 GET 請求，並包含 player_id 作為查詢參數
-    xhr.open("GET", 'http://127.0.0.1/php/account_center.php', true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    
-    // 定義請求完成後的處理函數
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                try {
-                    // 解析回傳的 JSON 資料
-                    var data = JSON.parse(xhr.responseText);
-                    
-                    // 假設回傳的是物件，根據實際需求來處理
-                    // 例如顯示在網頁上
-                    document.getElementById('player_data').innerText = JSON.stringify(data, null, 2);
-                } catch (e) {
-                    console.error("解析回傳的 JSON 時發生錯誤:", e);
-                }
-            } else {
-                console.error("請求失敗，狀態碼:", xhr.status);
-            }
-        }
-    };
-    
-    // 發送請求（不傳送任何資料）
-    xhr.send();
-}*/
-
 
 function send_score(pose, mode){
     var xhr = new XMLHttpRequest();
